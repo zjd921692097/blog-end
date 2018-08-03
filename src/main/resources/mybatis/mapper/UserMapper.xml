@@ -5,8 +5,8 @@
     <sql id="requestAllFields">
         <![CDATA[
             id,
-            userName
-
+            userName,
+            passWord
         ]]>
     </sql>
 
@@ -16,6 +16,14 @@
         <include refid="requestAllFields"/>
         FROM
         tb_user
+    </select>
+    <select id="login" parameterType="com.blog.param.LoginParam" resultType="com.blog.bean.User">
+        SELECT
+        <include refid="requestAllFields"/>
+        FROM
+        tb_user
+        WHERE
+        userName=#{userName}
     </select>
 
 

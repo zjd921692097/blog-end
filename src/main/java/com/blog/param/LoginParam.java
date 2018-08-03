@@ -1,17 +1,10 @@
-package com.blog.bean;
+package com.blog.param;
 
-public class User {
-    private int id;
+import java.io.Serializable;
+
+public class LoginParam implements Serializable {
     private String userName;
     private String passWord;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
