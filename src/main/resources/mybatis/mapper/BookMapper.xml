@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blog.dao.ArticleMapper">
+<mapper namespace="com.blog.dao.BookMapper">
 
     <sql id="requestAllFields">
         <![CDATA[
             id,
-            title,
-            content,
-            createdTime,
-            typeId
+          bookName,
+          pageNum,
+          alreadyReadNum,
+          img,
+          startDate,
+          author
         ]]>
     </sql>
 
 
-    <select id="getArticleByType" parameterType="com.blog.param.GetArticleParam" resultType="com.blog.bean.Article">
+    <select id="getBooks"  resultType="com.blog.bean.Book">
         SELECT
         <include refid="requestAllFields"/>
+        ,
+        100*alreadyReadNum/pageNum progress
         FROM
-        tb_article
-
-        <where>
-            <if test="null!=typeId">typeId = #{typeId}</if>
-            <if test="null!=status">AND status = #{status}</if>
-        </where>
-
+        tb_book
 
     </select>
+
+    <insert id="addBook" parameterType="com.blog.param.AddBookParam">
+        INSERT INTO tb_book(bookName,pageNum,alreadyReadNum,startDate,author) value(#{bookName},#{pageNum},#{alreadyReadNum},#{startDate},#{author})
+    </insert>
 
 
 
