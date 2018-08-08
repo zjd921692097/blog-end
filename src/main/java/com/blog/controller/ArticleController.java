@@ -1,6 +1,7 @@
 package com.blog.controller;
 
 import com.blog.bean.Article;
+import com.blog.bean.ArticleType;
 import com.blog.common.resultUtil.ListResultEx;
 import com.blog.param.GetArticleParam;
 import com.blog.service.ArticleService;
@@ -19,6 +20,18 @@ public class ArticleController {
     @RequestMapping(value = "/getArticleByType" ,method = RequestMethod.POST)
     @ResponseBody
     public ListResultEx<Article> getArticleByType(GetArticleParam param){
+        if(param.getTypeId()!=null){
+            if(param.getTypeId()==1){
+                param.setTypeId(null);
+            }
+        }
+
         return articleService.getArticleByType(param).makeSuccessResult();
+    }
+
+    @RequestMapping(value = "/getArticleType" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ListResultEx<ArticleType> getArticleType(){
+        return articleService.getArticleType();
     }
 }
