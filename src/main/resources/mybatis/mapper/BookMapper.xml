@@ -13,6 +13,14 @@
           author
         ]]>
     </sql>
+    <sql id="requestAllFieldsLog">
+        <![CDATA[
+            id,
+          bookId,
+          readNum,
+          readDate
+        ]]>
+    </sql>
 
 
     <select id="getBooks"  resultType="com.blog.bean.Book">
@@ -22,12 +30,27 @@
         100*alreadyReadNum/pageNum progress
         FROM
         tb_book
+        <where>
+            <if test="null!=id">id = #{id}</if>
+        </where>
 
     </select>
 
     <insert id="addBook" parameterType="com.blog.param.AddBookParam">
-        INSERT INTO tb_book(bookName,pageNum,alreadyReadNum,startDate,author) value(#{bookName},#{pageNum},#{alreadyReadNum},#{startDate},#{author})
+        INSERT INTO tb_book(bookName,pageNum,alreadyReadNum,startDate,author) values(#{bookName},#{pageNum},#{alreadyReadNum},#{startDate},#{author})
     </insert>
+
+    <insert id="addBookReadLog" parameterType="com.blog.param.AddReadLogParam">
+        INSERT INTO tb_bookread_log(bookId,readNum,readDate) values(#{bookId},#{readNum},#{readDate})
+    </insert>
+
+    <update id="addAlreadyReadNum" parameterType="com.blog.param.AddReadLogParam">
+        UPDATE tb_book SET alreadyReadNum=alreadyReadNum+#{readNum}
+        WHERE alreadyReadNum IN ( SELECT a.alreadyReadNum FROM (SELECT a.alreadyReadNum FROM tb_book a WHERE id=#{bookId})a);
+    </update>
+    <select id="getReadStatistics" parameterType="com.blog.param.GetReadStatisticsParam" resultType="java.lang.Integer">
+        SELECT SUM(readNum) FROM tb_bookread_log WHERE readDate BETWEEN #{startTime} and #{finishTime}
+    </select>
 
 
 

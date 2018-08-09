@@ -10,9 +10,17 @@ public class Book{
     private Integer alreadyReadNum;
     private String img;
     private Date startDate;
+    private String startDateString;
     private Double progress;
     private String author;
 
+    public String getStartDateString() {
+        return startDateString;
+    }
+
+    public void setStartDateString(String startDateString) {
+        this.startDateString = startDateString;
+    }
 
     public Integer getId() {
         return id;

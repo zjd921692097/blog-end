@@ -1,6 +1,8 @@
 
 import com.alibaba.fastjson.JSONArray;
 import com.blog.applocation.Application;
+import com.blog.param.GetReadStatisticsParam;
+import com.blog.service.BookService;
 import com.blog.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +18,17 @@ public class UserTest {
 
     @Resource
     UserService userService;
+    @Resource
+    BookService bookService;
     @Test
     public void testGetAllUser(){
         System.out.print("*********************"+JSONArray.toJSONString(userService.getAllUser()));
+    }
+    @Test
+    public void testReadStatistics(){
+        GetReadStatisticsParam param=new GetReadStatisticsParam();
+
+        System.out.print("*********************"+JSONArray.toJSONString(bookService.getReadStatistics(param)));
     }
 
 
