@@ -46,11 +46,15 @@
 
     <update id="addAlreadyReadNum" parameterType="com.blog.param.AddReadLogParam">
         UPDATE tb_book SET alreadyReadNum=alreadyReadNum+#{readNum}
-        WHERE alreadyReadNum IN ( SELECT a.alreadyReadNum FROM (SELECT a.alreadyReadNum FROM tb_book a WHERE id=#{bookId})a);
+        WHERE alreadyReadNum IN ( SELECT a.alreadyReadNum FROM (SELECT a.alreadyReadNum FROM tb_book a WHERE id=#{bookId})a) AND id=#{bookId}
     </update>
     <select id="getReadStatistics" parameterType="com.blog.param.GetReadStatisticsParam" resultType="java.lang.Integer">
         SELECT SUM(readNum) FROM tb_bookread_log WHERE readDate BETWEEN #{startTime} and #{finishTime}
     </select>
+    <select id="getRecentRead" resultType="com.blog.bean.Book">
+        SELECT * FROM tb_book WHERE id in(SELECT a.bookId FROM (SELECT * FROM tb_bookread_log ORDER BY readDate DESC LIMIT 1)a);
+    </select>
+
 
 
 

@@ -5,6 +5,15 @@ public class ReadStatisticsView {
     private int countWeek;
     private int countMouth;
     private int countYer;
+    private String bookName;
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 
     public int getCountThreeDay() {
         return countThreeDay;

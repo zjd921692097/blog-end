@@ -18,15 +18,14 @@
         <include refid="requestAllFields"/>
         FROM
         tb_article
-
         <where>
             <if test="null!=typeId">typeId = #{typeId}</if>
             <if test="null!=status">AND status = #{status}</if>
         </where>
-
-
     </select>
-
+    <insert id="write" parameterType="com.blog.param.WriteParam">
+        INSERT INTO tb_article(title,content,createdTime,typeId,status) VALUES (#{title},#{content},#{createdTime},#{typeId},#{status})
+    </insert>
 
 
 </mapper>

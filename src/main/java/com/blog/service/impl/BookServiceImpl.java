@@ -70,16 +70,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public ResultEx getReadStatistics(GetReadStatisticsParam param) {
+        int result=0;
         ReadStatisticsView view=new ReadStatisticsView();
         param.setStartTime(DateUtil.afterDays(3));
         param.setFinishTime(new Date());
-        view.setCountThreeDay(bookMapper.getReadStatistics(param));
+        view.setCountThreeDay((bookMapper.getReadStatistics(param)==null)?result:bookMapper.getReadStatistics(param));
         param.setStartTime(DateUtil.afterDays(7));
-        view.setCountWeek(bookMapper.getReadStatistics(param));
+        view.setCountWeek((bookMapper.getReadStatistics(param)==null)?result:bookMapper.getReadStatistics(param));
+        //由于本人忍受不了一周不学习看书，所以此处留个BUG，1周不看书系统会凉凉
         param.setStartTime(DateUtil.afterDays(30));
         view.setCountMouth(bookMapper.getReadStatistics(param));
         param.setStartTime(DateUtil.afterDays(365));
         view.setCountYer(bookMapper.getReadStatistics(param));
+        Book book=bookMapper.getRecentRead();
+        view.setBookName(book.getBookName());
         ResultEx resultEx=new ResultEx();
         resultEx.setData(view);
         return resultEx.makeSuccessResult();

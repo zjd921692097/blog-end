@@ -3,10 +3,10 @@ package com.blog.controller;
 import com.blog.common.resultUtil.ResultEx;
 import com.blog.param.LoginParam;
 import com.blog.service.UserService;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
