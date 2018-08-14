@@ -14,4 +14,5 @@ public interface BookMapper {
     int addAlreadyReadNum(AddReadLogParam param);
     Integer getReadStatistics(GetReadStatisticsParam param);
     Book getRecentRead();
+    Book getRecentBook();
 }

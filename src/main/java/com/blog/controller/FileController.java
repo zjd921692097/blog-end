@@ -36,7 +36,7 @@ public class FileController {
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
-        view.setFilePath("http://47.106.219.141:9090/img/"+fmt.format(new Date())+"/"+param.getFile().getOriginalFilename());
+        view.setFilePath("http://47.106.219.141:8888/img/"+fmt.format(new Date())+"/"+param.getFile().getOriginalFilename());
         resultEx.setData(view);
         System.out.print(f.getPath());
 

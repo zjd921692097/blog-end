@@ -10,6 +10,7 @@ import com.blog.param.AddReadLogParam;
 import com.blog.param.GetReadStatisticsParam;
 import com.blog.result.ReadStatisticsView;
 import com.blog.service.BookService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     @Resource
     BookMapper bookMapper;
+    @Resource
+    BookService bookService;
     @Override
     public ListResultEx<Book> getBooks() {
         ListResultEx<Book> resultEx=new ListResultEx<>();
@@ -43,6 +46,12 @@ public class BookServiceImpl implements BookService {
         param.setStartDate(new Date());
         int result=bookMapper.addBook(param);
         if(result!=0){
+            Book book=bookMapper.getRecentBook();
+            AddReadLogParam addReadLogParam=new AddReadLogParam();
+            addReadLogParam.setReadDate(new Date());
+            addReadLogParam.setBookId(book.getId());
+            addReadLogParam.setReadNum(0);
+            bookService.addReadLog(addReadLogParam);
             return new ResultEx().makeSuccessResult();
         }
         return new ResultEx().makeFailedResult();

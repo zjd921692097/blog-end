@@ -56,6 +56,8 @@
     </select>
 
 
-
+    <select id="getRecentBook" resultType="com.blog.bean.Book">
+        SELECT * FROM tb_book   order by startDate DESC LIMIT 1 ;
+    </select>
 
 </mapper>
